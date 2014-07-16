@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+var torrent = require("../torrent").torrent;
+torrent(process.argv[2]);
