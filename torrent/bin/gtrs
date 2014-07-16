@@ -1,3 +1,0 @@
-#!/usr/bin/env node
-var trs = require("../lib/gtrs").trs;
-trs(process.argv[2]);
