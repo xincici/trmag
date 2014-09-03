@@ -12,7 +12,7 @@ function torrent( word ){
         for(key in obj){
             str += key + '=' + encodeURIComponent(obj[key]) + '&';
         }
-        str.slice(-1);
+        str = str.slice(0,-1);
         return str;
     }
 
