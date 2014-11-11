@@ -8,16 +8,15 @@ function torrent( word ){
         s : word 
     };
     function serilize(obj){
-        var str = '';
-        for(key in obj){
-            str += key + '=' + encodeURIComponent(obj[key]) + '&';
+        var arr = [];
+        for(var key in obj){
+            arr.push( key + '=' + encodeURIComponent(obj[key]) );
         }
-        str = str.slice(0,-1);
-        return str;
+        return arr.join('&');
     }
 
     var fullUrl = url + '?' + serilize(data);
-    console.log(fullUrl);
+    console.log( 'searching...\n' );
     req.get(fullUrl, function(err, res, body){
         var ret = JSON.parse(body);
         console.log('种子总数：' + ret.total_found);
