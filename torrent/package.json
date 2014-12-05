@@ -6,6 +6,9 @@
     "start": "node app"
   },
   "dependencies": {
-    "request": "*"
+    "request": "*",
+    "commander": "*",
+    "cli-table": "*",
+    "cliff": "*"
   }
 }
