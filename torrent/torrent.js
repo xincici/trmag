@@ -3,11 +3,11 @@ var console = require('console');
 var Table = require("cli-table");
 var cliff = require("cliff");
 
-function torrent( word ){
+function torrent( program ){
     var url = "http://torrentproject.com/";
     var data = {
         out : 'json',
-        s : word 
+        s : program.name || '' 
     };
     var fullUrl = url + '?' + serilize(data);
     console.log( 'searching...\n' );
@@ -16,7 +16,7 @@ function torrent( word ){
         console.log('种子总数：' + ret.total_found);
         var i = '1';
         var arr = [];
-        while( ret[i] && parseInt(i) <= 10 ){
+        while( ret[i] && parseInt(i) <= ( program.size || 10 ) ){
             /*
             console.log( i + '==============================================' );
             console.log('  种子标题: ' + ret[i].title );
@@ -26,8 +26,8 @@ function torrent( word ){
             arr.push( ret[i] );
             i = (parseInt(i) + 1).toString();
         }
-        //showTable( arr );
-        showCliff( arr );
+        showTable( arr );
+        //showCliff( arr );
     });
 }
 function serilize(obj){
@@ -48,11 +48,11 @@ function sizeBetter(size){
 }
 function showTable(arr){
     var table = new Table({
-        head : ["hash", "size", "标题"]
+        head : [ "标题", "hash", "size" ]
     });
     arr.forEach(function(item){
         table.push([
-            item.torrent_hash, sizeBetter( item.torrent_size ), item.title
+            item.title, item.torrent_hash, sizeBetter( item.torrent_size ) 
         ]);
     });
     console.log( table.toString() );
