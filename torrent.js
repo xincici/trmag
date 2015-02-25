@@ -48,11 +48,11 @@ function sizeBetter(size){
 }
 function showTable(arr){
     var table = new Table({
-        head : [ "标题", "hash", "size" ]
+        head : [ "标题", "magnet", "size" ]
     });
     arr.forEach(function(item){
         table.push([
-            item.title, item.torrent_hash, sizeBetter( item.torrent_size ) 
+            item.title, 'magnet:?xt=urn:btih:' + item.torrent_hash, sizeBetter( item.torrent_size ) 
         ]);
     });
     console.log( table.toString() );
