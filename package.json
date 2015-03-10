@@ -1,9 +1,20 @@
 {
-  "name": "torrent",
-  "version": "0.0.1",
-  "private": true,
+  "name": "trmag",
+  "version": "1.0.1",
+  "private": false,
   "scripts": {
-    "start": "node app"
+  },
+  "author": {
+    "name" : "xincici(yelin)",
+    "email" : "linye1987@sina.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xincici/trmag"
+  },
+  "main": "torrent.js",
+  "bin": {
+    "trmag": "./bin/torrent"
   },
   "dependencies": {
     "request": "*",
