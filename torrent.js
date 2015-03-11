@@ -4,7 +4,7 @@ var Table = require("cli-table");
 var cliff = require("cliff");
 
 function torrent( program ){
-    var url = "http://torrentproject.com/";
+    var url = "http://torrentproject.se/";
     var data = {
         out : 'json',
         s : program.name || '' 
