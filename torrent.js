@@ -1,5 +1,7 @@
 var req = require('request');
 var console = require('console');
+var log4js = require('log4js'),
+    logger = log4js.getLogger('trmag');
 var Table = require("cli-table");
 var cliff = require("cliff");
 
@@ -10,19 +12,17 @@ function torrent( program ){
         s : program.name || '' 
     };
     var fullUrl = url + '?' + serilize(data);
-    console.log( 'searching...\n' );
+    logger.info( 'searching...\n' );
     req.get(fullUrl, function(err, res, body){
+        if( err ){
+            logger.error('errors happen, maybe the network is invalid!');
+            return;
+        }
         var ret = JSON.parse(body);
-        console.log('种子总数：' + ret.total_found);
+        logger.info('种子总数：' + ret.total_found);
         var i = '1';
         var arr = [];
         while( ret[i] && parseInt(i) <= ( program.size || 10 ) ){
-            /*
-            console.log( i + '==============================================' );
-            console.log('  种子标题: ' + ret[i].title );
-            console.log('  种子大小: ' + sizeBetter( ret[i].torrent_size ) );
-            console.log('  种子hash: ' + ret[i].torrent_hash );
-            */
             arr.push( ret[i] );
             i = (parseInt(i) + 1).toString();
         }
