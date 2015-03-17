@@ -7,6 +7,9 @@ program
     .option('-n --name <n>', 'torrent name')
     .option('-s --size <n>', 'max torrent number')
     .parse(process.argv);
+if( !process.argv[2] ){
+    program.help();
+}
 
 if( !program.name || typeof program.name !== "string" ){
     program.name = process.argv[2];
