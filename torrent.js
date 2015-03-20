@@ -68,4 +68,4 @@ function showCliff(arr){
     });
     console.log(cliff.stringifyRows(rows, ['red', 'blue', 'green']));
 }
-exports.torrent = torrent;
+module.exports = torrent;

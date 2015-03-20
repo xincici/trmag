@@ -11,4 +11,4 @@ function magnet( word ){
         console.log(str + '\n');
     });
 }
-exports.magnet = magnet;
+module.exports = magnet;
