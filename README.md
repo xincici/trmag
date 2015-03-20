@@ -1,6 +1,9 @@
-**trmag**
-Just a torrent seach tool.
-trmag = torrent + magnet
+**trmag** 
+
+Just a torrent seach tool. 
+
+trmag = torrent + magnet 
+
 use api from [torrentproject.com](http://torrentproject.com)
 
 **usage**
