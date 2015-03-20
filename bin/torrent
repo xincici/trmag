@@ -1,9 +1,14 @@
 #!/usr/bin/env node
 var torrent = require("../torrent");
 var program = require("commander");
+var fs = require("fs");
+var path = require("path");
+
+var filename = path.resolve(__dirname, '../package.json');
+var package = JSON.parse(fs.readFileSync(filename));
 
 program
-    .version('1.0.6')
+    .version(package.version)
     .option('-n --name <n>', 'torrent name')
     .option('-s --size <n>', 'max torrent number')
     .parse(process.argv);
