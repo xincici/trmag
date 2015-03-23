@@ -2,20 +2,24 @@ var req = require('request');
 var console = require('console');
 var log4js = require('log4js'),
     logger = log4js.getLogger('trmag');
-var Table = require("cli-table");
 var cliff = require("cliff");
 
 function torrent( program ){
+    tryTorrentProject( program );
+}
+
+function tryTorrentProject( program ){
     var url = "http://torrentproject.se/";
     var data = {
         out : 'json',
         s : program.name || '' 
     };
     var fullUrl = url + '?' + serilize(data);
-    logger.info( 'searching...\n' );
+    logger.info( 'searching from torrentproject.se...' );
     req.get(fullUrl, function(err, res, body){
         if( err ){
-            logger.error('errors happen, maybe the network is invalid!');
+            logger.error('errors happen, maybe the network is invalid!\n');
+            tryBrisk( program );
             return;
         }
         var ret = JSON.parse(body);
@@ -26,10 +30,31 @@ function torrent( program ){
             arr.push( ret[i] );
             i = (parseInt(i) + 1).toString();
         }
-        showTable( arr );
-        //showCliff( arr );
+        showCliffTorrentProject( arr );
     });
 }
+
+function tryBrisk( program ){
+    var url = 'http://brisk.eu.org/api/magnet.php';
+    var data = {
+        q : program.name || ''
+    }
+    var fullUrl = url + '?' + serilize(data);
+    logger.info( 'searching from brisk.en.org...' );
+    req.get(fullUrl, function(err, res, body){
+        if( err ){
+            logger.error('errors happen again, maybe the network is invalid!\n');
+            return;
+        }
+        var ret = JSON.parse(body);
+        logger.info('种子总数：' + ret.length);
+        var i = 0;
+        var arr = ret.slice(0, program.size || 10);
+        showCliffBrisk( arr );
+    });
+}
+
+
 function serilize(obj){
     var arr = [];
     for(var key in obj){
@@ -46,24 +71,20 @@ function sizeBetter(size){
         return (size/1024).toFixed(2) + 'K';
     }
 }
-function showTable(arr){
-    var table = new Table({
-        head : [ "标题", "magnet", "size" ]
-    });
-    arr.forEach(function(item){
-        table.push([
-            item.title, 'magnet:?xt=urn:btih:' + item.torrent_hash, sizeBetter( item.torrent_size ) 
-        ]);
-    });
-    console.log( table.toString() );
-}
-function showCliff(arr){
-    var rows = [
-        ["hash", "size", "标题"]
-    ];
+function showCliffTorrentProject(arr){
+    var rows = [ [ "magnet", "size", "标题" ] ];
     arr.forEach(function(item){
         rows.push([
-            item.torrent_hash, sizeBetter( item.torrent_size ), item.title
+            'magnet:?xt=urn:btih:' + item.torrent_hash, sizeBetter( item.torrent_size ), item.title
+        ]);
+    });
+    console.log(cliff.stringifyRows(rows, ['red', 'blue', 'green']));
+}
+function showCliffBrisk(arr){
+    var rows = [ ["magnet", "size", "标题"] ];
+    arr.forEach(function(item){
+        rows.push([
+             item.magnet.split('&')[0], item.size, item.title
         ]);
     });
     console.log(cliff.stringifyRows(rows, ['red', 'blue', 'green']));
