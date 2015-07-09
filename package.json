@@ -1,8 +1,12 @@
 {
   "name": "trmag",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "private": false,
   "scripts": {},
+  "keywords": [
+    "torrent",
+    "magnet"
+  ],
   "author": {
     "name": "xincici(yelin)",
     "email": "linye1987@sina.com"

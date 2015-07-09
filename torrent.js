@@ -5,7 +5,8 @@ var log4js = require('log4js'),
 var cliff = require("cliff");
 
 function torrent( program ){
-    tryTorrentProject( program );
+    tryBrisk( program );
+    //tryTorrentProject( program );
 }
 
 function tryTorrentProject( program ){
@@ -40,8 +41,15 @@ function tryBrisk( program ){
         q : program.name || ''
     }
     var fullUrl = url + '?' + serilize(data);
-    logger.info( 'searching from brisk.en.org...' );
-    req.get(fullUrl, function(err, res, body){
+    logger.info( 'searching from brisk.eu.org...' );
+    var options = {
+        url: fullUrl,
+        headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36',
+        'Referer': 'http://brisk.eu.org/'
+        }
+    };
+    req.get(options, function(err, res, body){
         if( err ){
             logger.error('errors happen again, maybe the network is invalid!\n');
             return;
