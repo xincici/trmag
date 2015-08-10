@@ -1,6 +1,6 @@
 {
   "name": "trmag",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "private": false,
   "scripts": {},
   "keywords": [
@@ -20,9 +20,9 @@
     "trmag": "./bin/torrent"
   },
   "dependencies": {
-    "cliff": "latest",
-    "commander": "latest",
+    "cliff": "^0.1.10",
+    "commander": "^2.8.1",
     "log4js": "^0.6.22",
-    "request": "latest"
+    "request": "^2.60.0"
   }
 }
