@@ -1,6 +1,6 @@
 **trmag** 
 
-    [![NPM Version][npm-image]][npm-url]
+    [![NPM Version][https://img.shields.io/npm/v/trmag.svg]][https://npmjs.org/package/trmag]
 
 Just a torrent seach tool. 
 
