@@ -1,5 +1,7 @@
 **trmag** 
 
+    [![NPM Version][npm-image]][npm-url]
+
 Just a torrent seach tool. 
 
 trmag = torrent + magnet 
