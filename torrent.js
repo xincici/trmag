@@ -5,8 +5,9 @@ var log4js = require('log4js'),
 var cliff = require("cliff");
 
 function torrent( program ){
-    tryBrisk( program );
+    //tryBrisk( program );
     //tryTorrentProject( program );
+    tryYtsto( program );
 }
 
 function tryTorrentProject( program ){
@@ -39,7 +40,7 @@ function tryBrisk( program ){
     var url = 'http://brisk.eu.org/api/magnet.php';
     var data = {
         q : program.name || ''
-    }
+    };
     var fullUrl = url + '?' + serilize(data);
     logger.info( 'searching from brisk.eu.org...' );
     var options = {
@@ -59,6 +60,31 @@ function tryBrisk( program ){
         var i = 0;
         var arr = ret.slice(0, program.size || 10);
         showCliffBrisk( arr );
+    });
+}
+function tryYtsto(program){
+    var url = 'https://yts.to/api/v2/list_movies.json';
+    var data = {
+        query_term : program.name || ''
+    };
+    var fullUrl = url + '?' + serilize(data);
+    logger.info( 'searching from yts.to...' );
+    var options = {
+        url: fullUrl,
+        headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36',
+        'Referer': 'http://brisk.eu.org/'
+        }
+    };
+    req.get(options, function(err, res, body){
+        if( err ){
+            logger.error('errors happen, maybe the network is invalid!\n');
+            return;
+        }
+        var ret = JSON.parse(body);
+        if(ret.status === 'ok' && ret.data && ret.data.movies){
+            showCliffYtsto(ret.data.movies);
+        }
     });
 }
 
@@ -97,4 +123,20 @@ function showCliffBrisk(arr){
     });
     console.log(cliff.stringifyRows(rows, ['red', 'blue', 'green']));
 }
+function showCliffYtsto(arr){
+    var rows = [ ["标题", "magnet", "size"] ];
+    arr.forEach(function(item){
+        rows.push([
+             item.title_long || item.title, ' ', ' '
+        ]);
+        var torrents = item.torrents;
+        torrents.forEach(function(tmp){
+            rows.push([
+                ' ', 'magnet:?xt=urn:btih:' + tmp.hash, tmp.size
+            ]);
+        });
+    });
+    console.log(cliff.stringifyRows(rows, ['red', 'blue', 'green']));
+}
+
 module.exports = torrent;
