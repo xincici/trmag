@@ -6,7 +6,7 @@ Just a torrent seach tool.
 
 trmag = torrent + magnet 
 
-use api from [torrentproject.com](http://torrentproject.com) (blocked by GFW)  and [brisk.eu.org](http://brisk.eu.org/api/magnet.php)
+use api from [torrentproject.se](https://torrentproject.se) (blocked by GFW)
 
 **usage**
 ```shell

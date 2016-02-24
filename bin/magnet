@@ -1,3 +1,0 @@
-#!/usr/bin/env node
-var magnet = require("../magnet");
-magnet(process.argv[2]);

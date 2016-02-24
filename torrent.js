@@ -6,12 +6,12 @@ var cliff = require("cliff");
 
 function torrent( program ){
     //tryBrisk( program );
-    //tryTorrentProject( program );
-    tryYtsto( program );
+    tryTorrentProject( program );
+    //tryYtsto( program );
 }
 
 function tryTorrentProject( program ){
-    var url = "http://torrentproject.se/";
+    var url = "https://torrentproject.se/";
     var data = {
         out : 'json',
         s : program.name || '' 
@@ -21,7 +21,6 @@ function tryTorrentProject( program ){
     req.get(fullUrl, function(err, res, body){
         if( err ){
             logger.error('errors happen, maybe the network is invalid!\n');
-            tryBrisk( program );
             return;
         }
         var ret = JSON.parse(body);
